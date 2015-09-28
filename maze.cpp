@@ -1,7 +1,7 @@
 #include "rat.h"
 #include "maze.h"
 
-Maze::Maze(string configfile, int maxrats, int maxrooms)
+Maze::Maze(string configfile, int maxrats, int maxrooms, char alg)
 {
     maxRats = maxrats;
     maxRooms = maxrooms;
@@ -32,7 +32,11 @@ Maze::Maze(string configfile, int maxrats, int maxrooms)
     cout << "Spawning " << maxRats << " rats..." << endl;
     for (int i = 0; i < maxRats; i++)
     {
-        Rat r(i, this);
+        //TODO: Handle distributed vs in order algorithm
+        Room * rm;
+        if (alg == 'i')
+            rm = &rooms.at(0);
+        Rat r(i, this, rm);
         rats.push_back(r);
     }
     //TODO: Traverse maze here.

@@ -25,7 +25,7 @@ private:
     int maxRooms;
     time_t mazeStartTime;
 public:
-    Maze(string configfile, int maxrats, int maxrooms);
+    Maze(string configfile, int maxrats, int maxrooms, char alg);
     vector<Room> rooms;
     vector<Rat> rats;
     int getTimeDiffSeconds();
