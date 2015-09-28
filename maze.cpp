@@ -36,8 +36,9 @@ Maze::Maze(string configfile, int maxrats, int maxrooms)
         rats.push_back(r);
     }
     //TODO: Traverse maze here.
-    for (Room r : rooms) //Destroy all semaphores.
+    for (int i = 0; (unsigned long)i < rooms.size(); i++) //Destroy all semaphores.
     {
+        Room r = rooms.at(i);
         sem_destroy(&r.door);
     }
 }
