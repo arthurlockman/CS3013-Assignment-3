@@ -7,6 +7,11 @@ Maze::Maze(string configfile, int maxrats, int maxrooms)
     maxRooms = maxrooms;
     ifstream file;
     file.open(configfile.c_str(), ios::in);
+    if (!file)
+    {
+        cerr << "File " << configfile << " could not be opened. Exiting..." << endl;
+        exit(0);
+    }
     cout << "Creating new maze with a maximum of " << maxrooms << " rooms and " << maxrats << " rats." << endl;
     cout << "Opened config file at " << configfile << endl;
 
@@ -18,10 +23,22 @@ Maze::Maze(string configfile, int maxrats, int maxrooms)
         capacity = atoi(s);
         s = strtok(NULL,  " ");
         time = atoi(s);
-        numrooms++;
-        Room r(capacity, time);
+        Room r(numrooms, capacity, time);
         rooms.push_back(r);
+        numrooms++;
     }
     file.close();
+
+    cout << "Spawning " << maxRats << " rats..." << endl;
+    for (int i = 0; i < maxRats; i++)
+    {
+        Rat r(i, this);
+        rats.push_back(r);
+    }
+    //TODO: Traverse maze here.
+    for (Room r : rooms) //Destroy all semaphores.
+    {
+        sem_destroy(&r.door);
+    }
 }
 

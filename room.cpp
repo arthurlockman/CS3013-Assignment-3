@@ -1,8 +1,11 @@
 #include "room.h"
 
-Room::Room(int capacity, int time)
+Room::Room(int id, int capacity, int time)
 {
+    roomID = id;
     roomCapacity = capacity;
     traversalTime = time;
-    cout << "Created room with capacity " << capacity << " and traversal time of " << time << " seconds." << endl;
+    sem_init(&door, 0, capacity);
+    cout << "Created room " << id << " with capacity " << capacity 
+        << " and traversal time of " << time << " seconds." << endl;
 }

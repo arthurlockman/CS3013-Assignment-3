@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+#include <semaphore.h>
 
 using namespace std;
 class Room
@@ -10,8 +11,10 @@ class Room
 private:
     int roomCapacity;
     int traversalTime;
+    int roomID;
 public:
-    Room(int capacity, int time);
+    Room(int id, int capacity, int time);
+    sem_t door;
 };
 
 #endif

@@ -10,8 +10,11 @@
 #include "room.h"
 #include <fstream>
 #include <cstring>
+#include "rat.h"
 
 using namespace std;
+class Rat;
+
 class Maze
 {
 private:
@@ -20,6 +23,7 @@ private:
 public:
     Maze(string configfile, int maxrats, int maxrooms);
     vector<Room> rooms;
+    vector<Rat> rats;
 };
 
 #endif

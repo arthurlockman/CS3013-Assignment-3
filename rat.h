@@ -6,6 +6,9 @@
 #include "maze.h"
 
 using namespace std;
+
+class Maze;
+
 class Rat
 {
 private:
@@ -24,6 +27,7 @@ public:
     {
         id = ratID;
         maze = m;
+        cout << "Rat " << id << " created." << endl;
     };
     virtual ~Rat() {};
     bool StartThread();

@@ -11,7 +11,7 @@ int main(int argc, char ** argv)
     {
         int rats = atoi(argv[1]);
         rats = (rats > MAXRATS) ? MAXRATS : rats;
-        Maze maze("./room_config.txt", rats, MAXROOMS); 
+        Maze maze("./rooms", rats, MAXROOMS); 
     }
     else if (argc == 3)
     {
@@ -21,7 +21,7 @@ int main(int argc, char ** argv)
     }
     else
     {
-        cout << "Usage: ./main [rats] [config_path]" << endl;
+        cout << "Usage: ./main [rats] [config_path (optional)]" << endl;
         exit(0);
     }
 }
