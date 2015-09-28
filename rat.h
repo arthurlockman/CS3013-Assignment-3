@@ -5,6 +5,7 @@
 #include <iostream>
 #include "maze.h"
 #include "room.h"
+#include <unistd.h>
 
 using namespace std;
 
@@ -16,16 +17,15 @@ private:
     pthread_t _thread;
     int id;
     Maze * maze;
-    Room * startingRoom;
+    int startingRoom;
     static void * StartThreadFunction(void * rat)
     {
-        ((Rat *)rat)->Traverse();
-        return NULL;
+        return ((Rat *)rat)->Traverse(rat);
     };
 protected:
-    void * Traverse();
+    void * Traverse(void * rat);
 public:
-    Rat(int ratID, Maze * m, Room * r);
+    Rat(int ratID, Maze * m, int room);
     virtual ~Rat() {};
     bool StartThread();
     bool JoinThread();

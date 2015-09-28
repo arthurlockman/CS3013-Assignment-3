@@ -7,6 +7,7 @@
 #include "rat.h"
 
 using namespace std;
+
 class Rat;
 
 class Room
@@ -21,6 +22,8 @@ public:
     void EnterRoom(Rat * rat);
     void LeaveRoom(Rat * rat);
     int TryToEnterRoom(Rat * rat);
+    int getID();
+    int getTraversalTime();
 };
 
 #endif

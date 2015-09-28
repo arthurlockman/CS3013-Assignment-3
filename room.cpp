@@ -30,5 +30,15 @@ int Room::TryToEnterRoom(Rat * rat)
     {
         return -1;
     }
+    return -1;
 }
 
+int Room::getID()
+{
+    return roomID;
+}
+
+int Room::getTraversalTime()
+{
+    return traversalTime;
+}
