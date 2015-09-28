@@ -4,8 +4,11 @@
 #include <stdlib.h>
 #include <iostream>
 #include <semaphore.h>
+#include "rat.h"
 
 using namespace std;
+class Rat;
+
 class Room
 {
 private:
@@ -15,6 +18,9 @@ private:
 public:
     Room(int id, int capacity, int time);
     sem_t door;
+    void EnterRoom(Rat * rat);
+    void LeaveRoom(Rat * rat);
+    int TryToEnterRoom(Rat * rat);
 };
 
 #endif

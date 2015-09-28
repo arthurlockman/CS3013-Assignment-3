@@ -4,3 +4,4 @@ main
 *.pyc
 room_config.txt
 rooms
+maze

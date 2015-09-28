@@ -21,7 +21,7 @@ int main(int argc, char ** argv)
     }
     else
     {
-        cout << "Usage: ./main [rats] [config_path (optional)]" << endl;
+        cout << "Usage: ./maze [rats] [config_path (optional)]" << endl;
         exit(0);
     }
 }

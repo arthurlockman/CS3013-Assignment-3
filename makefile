@@ -1,7 +1,7 @@
 all: main
 
-main: main.o room.o rat.o maze.o
-	g++ main.o room.o rat.o maze.o -lrt -lpthread -o main
+main: room.o rat.o maze.o main.o
+	g++ main.o room.o rat.o maze.o -lrt -lpthread -o maze
 
 main.o: main.cpp room.h rat.h maze.h
 	g++ -std=c++0x -c main.cpp
@@ -16,4 +16,4 @@ maze.o: maze.h maze.cpp room.h
 	g++ -std=c++0x -c maze.cpp
 
 clean:
-	rm maze.o rat.o room.o main.o main
+	rm maze.o rat.o room.o main.o maze
