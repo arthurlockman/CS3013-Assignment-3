@@ -5,3 +5,4 @@ main
 room_config.txt
 rooms
 maze
+*.swp

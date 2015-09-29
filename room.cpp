@@ -23,14 +23,7 @@ void Room::LeaveRoom(Rat * rat)
 
 int Room::TryToEnterRoom(Rat * rat)
 {
-    if (sem_trywait(&door) == 0)
-    {
-        //do stuff
-    } else
-    {
-        return -1;
-    }
-    return -1;
+    return sem_trywait(&door);
 }
 
 int Room::getID()

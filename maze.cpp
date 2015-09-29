@@ -35,14 +35,15 @@ Maze::Maze(string configfile, int maxrats, int maxrooms, char alg)
     for (int i = 0; i < maxRats; i++)
     {
         int rm;
-        if (alg == 'i')
+        if (alg == 'i' || alg == 'n')
         {
             rm = 0;
         }
         else if ((unsigned long)maxRats > rooms.size())
         {
             rm = i % rooms.size();
-        } else
+        }
+        else
         {
             rm = i;
         }

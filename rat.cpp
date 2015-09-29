@@ -24,25 +24,55 @@ void * Rat::Traverse(void * rat)
         Room * r;
         while ((unsigned long)visited < maze->rooms.size())
         {
-            /* cout << "Rat " << ((Rat *)rat)->id << " starting in room " << idx << endl; */
             r = &maze->rooms.at(idx);
-            r->EnterRoom(this);
+            r->EnterRoom((Rat *)rat);
             int entryTime = maze->getTimeDiffSeconds();
             sleep(r->getTraversalTime());
-            r->LeaveRoom(this);
+            r->LeaveRoom((Rat *)rat);
             int exitTime = maze->getTimeDiffSeconds();
-            /* cout << "Rat " << ((Rat *)rat)->id << " leaving room " << idx << endl; */
             maze->addToLogbook(idx, ((Rat *)rat)->id, entryTime, exitTime);
             visited++;
             idx++;
             if ((unsigned long)idx > maze->rooms.size() - 1)
                 idx = 0;
         }
-        ((Rat *)rat)->timeToComplete = maze->getTimeDiffSeconds();
     } else
     {
         //TODO: implement non-blocking mode
+        int idx = 0;
+        int visited = 0;
+        int visitedRooms[MAXROOMS] = {};
+        Room * r;
+        while ((unsigned long) visited < maze->rooms.size())
+        {
+            if (visitedRooms[idx])
+            {
+                idx++;
+                if ((unsigned long)idx > maze->rooms.size() -1)
+                    idx = 0;
+            }
+            else
+            {
+                r = &maze->rooms.at(idx);
+                if (r->TryToEnterRoom((Rat *)rat) == 0)
+                {
+                    int entryTime = maze->getTimeDiffSeconds();
+                    sleep(r->getTraversalTime());
+                    r->LeaveRoom(this);
+                    int exitTime = maze->getTimeDiffSeconds();
+                    maze->addToLogbook(idx, ((Rat *)rat)->id, entryTime, exitTime);
+                    visited++;
+                    visitedRooms[idx] = 1;
+                } else
+                {
+                    idx++;
+                    if ((unsigned long)idx > maze->rooms.size() -1)
+                        idx = 0;
+                }
+            }
+        }
     }
+    ((Rat *)rat)->timeToComplete = maze->getTimeDiffSeconds();
     return NULL;
 }
 
