@@ -18,6 +18,7 @@ private:
     int id;
     Maze * maze;
     int startingRoom;
+    int timeToComplete;
     static void * StartThreadFunction(void * rat)
     {
         return ((Rat *)rat)->Traverse(rat);
@@ -29,6 +30,7 @@ public:
     virtual ~Rat() {};
     bool StartThread();
     bool JoinThread();
+    int getTime();
 };
 #endif
 

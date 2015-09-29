@@ -24,6 +24,7 @@ public:
     int TryToEnterRoom(Rat * rat);
     int getID();
     int getTraversalTime();
+    int getCapacity();
 };
 
 #endif

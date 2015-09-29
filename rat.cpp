@@ -35,10 +35,16 @@ void * Rat::Traverse(void * rat)
         if ((unsigned long)idx > maze->rooms.size() - 1)
             idx = 0;
     }
+    ((Rat *)rat)->timeToComplete = maze->getTimeDiffSeconds();
     return NULL;
 }
 
 bool Rat::JoinThread()
 {
     return (pthread_join(_thread, NULL) == 0);
+}
+
+int Rat::getTime()
+{
+    return timeToComplete;
 }

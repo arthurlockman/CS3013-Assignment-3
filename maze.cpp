@@ -7,6 +7,7 @@ Maze::Maze(string configfile, int maxrats, int maxrooms, char alg)
     maxRooms = maxrooms;
     ifstream file;
     file.open(configfile.c_str(), ios::in);
+    //TODO: Handle malformed files
     if (!file)
     {
         cerr << "File " << configfile << " could not be opened. Exiting..." << endl;
@@ -68,7 +69,7 @@ int Maze::getTimeDiffSeconds()
 
 void Maze::run()
 {
-    //TODO: Traverse maze here.
+    cout << "\nLETTING LOOSE THE RATS...\n" << endl;
     mazeStartTime = time(NULL);
     for (int i = 0; (unsigned long)i < rats.size(); i++)
     {
@@ -80,13 +81,19 @@ void Maze::run()
     }
     for (int i = 0; (unsigned long)i < rooms.size(); i++)
     {
+        cout << "Room " << i << " [" << rooms.at(i).getTraversalTime() << " " << rooms.at(i).getCapacity() << "]: ";
         for (int j = 0; (unsigned long)j < rats.size(); j++)
         {
-            cout << "Room " << i << " visited by rat " << RoomVB[i][j].iRat
-                << ", entered at " << RoomVB[i][j].tEntry << " and left at "
-                << RoomVB[i][j].tDep << "." << endl;
+            cout << RoomVB[i][j].iRat << " " << RoomVB[i][j].tEntry << " " << RoomVB[i][j].tDep << "; ";
         }
+        cout << endl;
     }
+    for (int i = 0; (unsigned long)i < rats.size(); i++)
+    {
+        cout << "Rat " << i << " completed maze in " << rats.at(i).getTime() << " seconds." << endl;
+    }
+    //TODO: Compute ideal time.
+    cout << "Total traversal time: " << this->getTimeDiffSeconds() << " seconds, compared to ideal time: 15 seconds." << endl;
 }
 
 void Maze::addToLogbook(int room, int ratID, int timeEntry, int timeDep)

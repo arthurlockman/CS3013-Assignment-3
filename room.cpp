@@ -42,3 +42,9 @@ int Room::getTraversalTime()
 {
     return traversalTime;
 }
+
+int Room::getCapacity()
+{
+    return roomCapacity;
+}
+
