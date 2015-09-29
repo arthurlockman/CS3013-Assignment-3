@@ -19,6 +19,7 @@ private:
     Maze * maze;
     int startingRoom;
     int timeToComplete;
+    int traversalMode; //0 is normal, 1 is non-blocking
     static void * StartThreadFunction(void * rat)
     {
         return ((Rat *)rat)->Traverse(rat);
@@ -26,7 +27,7 @@ private:
 protected:
     void * Traverse(void * rat);
 public:
-    Rat(int ratID, Maze * m, int room);
+    Rat(int ratID, Maze * m, int room, int mode);
     virtual ~Rat() {};
     bool StartThread();
     bool JoinThread();

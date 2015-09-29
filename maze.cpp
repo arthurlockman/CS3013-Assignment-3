@@ -31,6 +31,7 @@ Maze::Maze(string configfile, int maxrats, int maxrooms, char alg)
     file.close();
 
     cout << "Spawning " << maxRats << " rats..." << endl;
+    int mode = (alg == 'n') ? 1 : 0;
     for (int i = 0; i < maxRats; i++)
     {
         int rm;
@@ -45,7 +46,7 @@ Maze::Maze(string configfile, int maxrats, int maxrooms, char alg)
         {
             rm = i;
         }
-        Rat r(i, this, rm);
+        Rat r(i, this, rm, mode);
         rats.push_back(r);
     }
     sem_init(&vbSem, 0, 1);
