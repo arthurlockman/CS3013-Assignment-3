@@ -80,21 +80,26 @@ void Maze::run()
     {
         rats.at(i).JoinThread();
     }
+    int idealTime = 0;
     for (int i = 0; (unsigned long)i < rooms.size(); i++)
     {
         cout << "Room " << i << " [" << rooms.at(i).getTraversalTime() << " " << rooms.at(i).getCapacity() << "]: ";
+        idealTime += rooms.at(i).getTraversalTime();
         for (int j = 0; (unsigned long)j < rats.size(); j++)
         {
             cout << RoomVB[i][j].iRat << " " << RoomVB[i][j].tEntry << " " << RoomVB[i][j].tDep << "; ";
         }
         cout << endl;
     }
+    idealTime *= rats.size();
+    int totaltime = 0;
     for (int i = 0; (unsigned long)i < rats.size(); i++)
     {
         cout << "Rat " << i << " completed maze in " << rats.at(i).getTime() << " seconds." << endl;
+        totaltime += rats.at(i).getTime();
     }
     //TODO: Compute ideal time.
-    cout << "Total traversal time: " << this->getTimeDiffSeconds() << " seconds, compared to ideal time: 15 seconds." << endl;
+    cout << "Total traversal time: " << totaltime << " seconds, compared to ideal time: " << idealTime << " seconds." << endl;
 }
 
 void Maze::addToLogbook(int room, int ratID, int timeEntry, int timeDep)
