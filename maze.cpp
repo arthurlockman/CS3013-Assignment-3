@@ -20,10 +20,11 @@ Maze::Maze(string configfile, int maxrats, int maxrooms, char alg)
     string str;
     while (getline(file, str) && (numrooms < maxRooms))
     {
-        char *s = strtok((char *)str.c_str(), " ");
-        capacity = atoi(s);
-        s = strtok(NULL,  " ");
-        delayTime = atoi(s);
+        if (sscanf((char *)str.c_str(), "%i %i", &capacity, &delayTime) != 2)
+        {
+            cerr << "Bad description file!" << endl;
+            exit(1);
+        }
         Room r(numrooms, capacity, delayTime);
         rooms.push_back(r);
         numrooms++;
@@ -35,7 +36,7 @@ Maze::Maze(string configfile, int maxrats, int maxrooms, char alg)
     for (int i = 0; i < maxRats; i++)
     {
         int rm;
-        if (alg == 'i' || alg == 'n')
+        if (alg == 'i')
         {
             rm = 0;
         }
@@ -113,3 +114,21 @@ void Maze::addToLogbook(int room, int ratID, int timeEntry, int timeDep)
     sem_post(&vbSem);
 }
 
+int Maze::getCheapestRoom(int * visited)
+{
+    int room;
+    int cost = 10000;
+    for (unsigned long i = 0; i < rooms.size(); i++)
+    {
+        if (visited[i] != 1)
+        {
+            int tmpcost = rooms.at(i).getCost();
+            if (tmpcost < cost)
+            {
+                room = i;
+                cost = tmpcost;
+            }
+        }
+    }
+    return room;
+}

@@ -25,6 +25,7 @@ public:
     int getID();
     int getTraversalTime();
     int getCapacity();
+    int getCost();
 };
 
 #endif

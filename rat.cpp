@@ -39,7 +39,7 @@ void * Rat::Traverse(void * rat)
     } else
     {
         //TODO: implement non-blocking mode
-        int idx = 0;
+        int idx = ((Rat *)rat)->startingRoom;
         int visited = 0;
         int visitedRooms[MAXROOMS] = {};
         Room * r;
@@ -47,9 +47,7 @@ void * Rat::Traverse(void * rat)
         {
             if (visitedRooms[idx])
             {
-                idx++;
-                if ((unsigned long)idx > maze->rooms.size() -1)
-                    idx = 0;
+                idx = maze->getCheapestRoom(visitedRooms);
             }
             else
             {
@@ -65,9 +63,7 @@ void * Rat::Traverse(void * rat)
                     visitedRooms[idx] = 1;
                 } else
                 {
-                    idx++;
-                    if ((unsigned long)idx > maze->rooms.size() -1)
-                        idx = 0;
+                    idx = maze->getCheapestRoom(visitedRooms);
                 }
             }
         }

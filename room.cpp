@@ -41,3 +41,11 @@ int Room::getCapacity()
     return roomCapacity;
 }
 
+int Room::getCost()
+{
+    int emptySlots;
+    sem_getvalue(&door, &emptySlots);
+    emptySlots = (emptySlots < 0) ? 0 : emptySlots;
+    int taken = roomCapacity - emptySlots;
+    return taken * traversalTime;
+}

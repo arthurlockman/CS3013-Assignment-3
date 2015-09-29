@@ -44,6 +44,7 @@ public:
     int getTimeDiffSeconds();
     void run();
     void addToLogbook(int room, int ratID, int timeEntry, int timeDep);
+    int getCheapestRoom(int * visited);
 };
 
 #endif
