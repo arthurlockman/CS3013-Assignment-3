@@ -16,6 +16,8 @@ To clean the compiled objects, type:
 
     make clean
 
+PLEASE NOTE: This program will only compile on CCC1 due to the fact that the other CCC machines are running ancient versions of g++.
+
 Running
 -------
 To run the program, in the directory type:
