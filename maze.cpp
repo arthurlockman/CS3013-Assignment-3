@@ -1,13 +1,19 @@
 #include "rat.h"
 #include "maze.h"
 
+/**
+ * Constructs the maze object.
+ * @param configfile The file to read in the room configuration from.
+ * @param maxrats The maximum number of allowable rats in the maze.
+ * @param maxrooms The maximum number of allowable rooms.
+ * @param alg The algorithm to use (n, i, or d)
+ */
 Maze::Maze(string configfile, int maxrats, int maxrooms, char alg)
 {
     maxRats = maxrats;
     maxRooms = maxrooms;
     ifstream file;
     file.open(configfile.c_str(), ios::in);
-    //TODO: Handle malformed files
     if (!file)
     {
         cerr << "File " << configfile << " could not be opened. Exiting..." << endl;
@@ -20,12 +26,13 @@ Maze::Maze(string configfile, int maxrats, int maxrooms, char alg)
     string str;
     while (getline(file, str) && (numrooms < maxRooms))
     {
+        //If there are more or less data points per line, bad file
         if (sscanf((char *)str.c_str(), "%i %i", &capacity, &delayTime) != 2)
         {
             cerr << "Bad description file!" << endl;
             exit(1);
         }
-        Room r(numrooms, capacity, delayTime);
+        Room r(numrooms, capacity, delayTime); //create and add room to list of rooms
         rooms.push_back(r);
         numrooms++;
     }
@@ -48,12 +55,16 @@ Maze::Maze(string configfile, int maxrats, int maxrooms, char alg)
         {
             rm = i;
         }
-        Rat r(i, this, rm, mode);
+        Rat r(i, this, rm, mode); //Create and add rats to list of rats.
         rats.push_back(r);
     }
     sem_init(&vbSem, 0, 1);
 }
 
+/**
+ * Maze destructor. Handles cleanup, mainly destroying all of 
+ * the semaphores created by the program properly.
+ */
 Maze::~Maze()
 {
     for (int i = 0; (unsigned long)i < rooms.size(); i++) //Destroy all semaphores.
@@ -64,12 +75,20 @@ Maze::~Maze()
     sem_destroy(&vbSem);
 }
 
+/**
+ * Get the difference in seconds between now and when the maze
+ * traversal started. Simplifies log book entering in the rat class.
+ */
 int Maze::getTimeDiffSeconds()
 {
     time_t t = time(NULL);
     return (int)difftime(t, mazeStartTime);
 }
 
+/**
+ * Run the maze. This starts and kills all of the rats, and 
+ * then prints out all of the results of the maze traversal.
+ */
 void Maze::run()
 {
     cout << "\nLETTING LOOSE THE RATS...\n" << endl;
@@ -100,10 +119,16 @@ void Maze::run()
         cout << "Rat " << i << " completed maze in " << rats.at(i).getTime() << " seconds." << endl;
         totaltime += rats.at(i).getTime();
     }
-    //TODO: Compute ideal time.
     cout << "Total traversal time: " << totaltime << " seconds, compared to ideal time: " << idealTime << " seconds." << endl;
 }
 
+/**
+ * Adds a data point to the specified logbook.
+ * @param room The room to add an entry for.
+ * @param ratID The rat to add an entry for.
+ * @param timeEntry The time that the rat entered the room.
+ * @param timeDep the time that the rat lef the room.
+ */
 void Maze::addToLogbook(int room, int ratID, int timeEntry, int timeDep)
 {
     sem_wait(&vbSem);
@@ -114,6 +139,16 @@ void Maze::addToLogbook(int room, int ratID, int timeEntry, int timeDep)
     sem_post(&vbSem);
 }
 
+/**
+ * Get the room in the maze with the "lowest cost". This is 
+ * found by looping through each room and finding the one that
+ * reports the lowest cost, and then returning that one's ID.
+ * This also takes into account which rooms the rat has 
+ * previously visited.
+ * @param visited An array of integers representing room IDs
+ * that the rat has already visited.
+ * @return An int, the room ID of the cheapest room in the maze.
+ */
 int Maze::getCheapestRoom(int * visited)
 {
     int room;

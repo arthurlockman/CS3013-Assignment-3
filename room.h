@@ -13,15 +13,15 @@ class Rat;
 class Room
 {
 private:
-    int roomCapacity;
-    int traversalTime;
-    int roomID;
+    int roomCapacity; //Capacity of the room.
+    int traversalTime; //Time a rat needs to sleep in the room.
+    int roomID; //The ID of the room.
 public:
     Room(int id, int capacity, int time);
     sem_t door;
-    void EnterRoom(Rat * rat);
-    void LeaveRoom(Rat * rat);
-    int TryToEnterRoom(Rat * rat);
+    void EnterRoom();
+    void LeaveRoom();
+    int TryToEnterRoom();
     int getID();
     int getTraversalTime();
     int getCapacity();

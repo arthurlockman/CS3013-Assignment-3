@@ -19,9 +19,9 @@
 using namespace std;
 
 typedef struct{
-    int iRat;
-    int tEntry;
-    int tDep;
+    int iRat; //rat identifier
+    int tEntry; //Time of rat entry
+    int tDep; //time of rat departure
 } vbentry;
 
 class Rat;
@@ -30,12 +30,12 @@ class Room;
 class Maze
 {
 private:
-    int maxRats;
-    int maxRooms;
-    time_t mazeStartTime;
-    vbentry RoomVB[MAXROOMS][MAXRATS];
-    int VisitorCount[MAXROOMS];
-    sem_t vbSem;
+    int maxRats; //Max number of rats in maze.
+    int maxRooms; //Max number of rooms in maze.
+    time_t mazeStartTime; //Start time of all rats traversal.
+    vbentry RoomVB[MAXROOMS][MAXRATS]; //Visitors book
+    int VisitorCount[MAXROOMS]; //Count of visitors for each room
+    sem_t vbSem; //Semaphore to control access to visitors book
 public:
     Maze(string configfile, int maxrats, int maxrooms, char alg);
     ~Maze();
